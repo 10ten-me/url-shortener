@@ -14,12 +14,19 @@ pub mod generator;
 mod shorten;
 mod unshorten;
 
+static NOT_FOUND: &str = "/not-found";
 static DATABASE_URL: &str = "PG_URL";
+
+#[get("/")]
+fn not_found() -> String {
+    format!("NOT FOUND")
+}
 
 fn main() {
     rocket::ignite()
         .manage(middleware::init_db_pool(std::env::var(DATABASE_URL).unwrap()))
         .mount("/shorten", routes![shorten::build_shortened])
         .mount("/", routes![unshorten::redirect_to_initial])
+        .mount("/not-found", routes![not_found])
         .launch();
 }

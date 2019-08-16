@@ -26,8 +26,9 @@ impl <'a, 'r> FromRequest<'a, 'r> for Host {
 
 /*
 ** DB Guard
+** Extracted from Diesel doc - https://rocket.rs/v0.4/guide/state/#databases
 */
-// Extracted from Diesel doc - https://rocket.rs/v0.4/guide/state/#databases
+
 type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 pub fn init_db_pool(database_url: String) -> Pool {

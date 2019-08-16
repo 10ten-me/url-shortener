@@ -13,6 +13,10 @@ pub struct Url {
 
 impl Url {
 
+    pub fn find(db: &PgConnection, id: &str) -> QueryResult<Url> {
+        urls::table.find(id).get_result(db)
+    }
+
     pub fn new_and_save(db: &PgConnection, initial: &str) -> QueryResult<Url> {
         diesel::insert_into(urls::table)
             .values(Self {
